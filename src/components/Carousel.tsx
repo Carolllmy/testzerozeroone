@@ -196,7 +196,8 @@ export default function Carousel() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
-                            className="w-full mt-4 text-center"
+                            className="mt-4 text-center px-2"
+                            style={{ width: 'calc(100% - 16px)', margin: '16px auto 0' }}
                           >
                             {activeInfoFields.map((field) => {
                               // Handle discount and price on their own line
