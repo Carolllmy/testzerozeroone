@@ -116,7 +116,7 @@ export default function Carousel() {
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
           <Edit size={isMobile ? 16 : 18} className="opacity-90" />
-          <span className={isMobile ? 'text-sm' : ''}>Edit</span>
+          <span className={isMobile ? 'text-sm' : ''}>Customization</span>
         </motion.button>
       </div>
 

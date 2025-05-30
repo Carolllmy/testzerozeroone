@@ -130,7 +130,7 @@ export function ReorderableItem({
         }
       }}
     >
-      <div className="flex items-center gap-2 px-3 py-0.5 cursor-grab active:cursor-grabbing touch-none">
+      <div className="flex items-center gap-2 px-3 py-1 cursor-grab active:cursor-grabbing touch-none">
         <motion.div
           className="cursor-grab active:cursor-grabbing touch-none"
           whileHover={{ scale: 1.2 }}

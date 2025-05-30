@@ -264,7 +264,7 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
           />
           
           <motion.p 
-            className="text-xs text-gray-400 mt-2"
+            className={`text-xs text-gray-400 ${isMobile ? 'mt-4' : 'mt-2'}`}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
@@ -390,11 +390,11 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
       <motion.button
         onClick={handleSaveConfiguration}
         disabled={isSaving}
-        className={`${isMobile ? 'fixed bottom-52 right-4 px-5 py-2.5' : 'absolute bottom-8 right-8 px-7 py-3.5'} text-white rounded-lg transition-all z-50 shadow-lg hover:shadow-xl font-medium tracking-wide ${
+        className={`${isMobile ? 'fixed bottom-56 right-4 px-5 py-2.5' : 'absolute bottom-8 right-8 px-7 py-3.5'} rounded-lg transition-all z-50 shadow-lg hover:shadow-xl font-medium tracking-wide ${
           showSuccess 
-            ? 'bg-gradient-to-r from-green-500 to-green-600' 
-            : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700'
-        } ${isSaving ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+            ? 'bg-green-500 text-white border-2 border-green-500' 
+            : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-gray-900'
+        } ${isSaving ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
         whileHover={!isSaving ? { scale: 1.05 } : {}}
         whileTap={!isSaving ? { scale: 0.95 } : {}}
         initial={{ opacity: 0, y: 20 }}
@@ -444,7 +444,7 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              Save Configuration
+              Save
             </motion.span>
           )}
         </AnimatePresence>
