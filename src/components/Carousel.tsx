@@ -152,7 +152,7 @@ export default function Carousel() {
                     }}
                     animate={{ 
                       scale: isCenter ? 1 : 0.85 - Math.abs(offset) * 0.08,
-                      opacity: isCenter ? 1 : 0.7 - Math.abs(offset) * 0.15,
+                      opacity: isCenter ? 1 : 0.4 - Math.abs(offset) * 0.1,
                       x: offset * (isMobile ? 180 : 280),
                       rotateY: offset * -12,
                       zIndex: isCenter ? 30 : 20,

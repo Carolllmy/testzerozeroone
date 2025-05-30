@@ -10,7 +10,13 @@
       "Bash(npm run dev:*)",
       "Bash(rg:*)",
       "Bash(/usr/local/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/arm64-darwin/rg \"absolute|relative|fixed\" -A 2 -B 2 /Users/tianxing/Documents/NYU/Code/Audible/src/components/EditMode)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(GIT_CURL_VERBOSE=1 git push -u origin main 2 >& 1)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   },
   "enableAllProjectMcpServers": false

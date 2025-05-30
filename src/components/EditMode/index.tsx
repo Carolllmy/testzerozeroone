@@ -221,7 +221,7 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
 
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div 
-          className="flex flex-col items-center z-20"
+          className="flex flex-col items-center z-40"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -276,15 +276,34 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
                           draggable
                           onDragStart={(e) => handleDragStart(e as React.DragEvent, item.id)}
                           onDragEnd={handleDragEnd}
+                          onTouchStart={() => {
+                            setDraggedItem(item.id);
+                            setShowPreview(true);
+                          }}
+                          onTouchEnd={(e) => {
+                            const touch = e.changedTouches[0];
+                            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                            const containerElement = containerRef.current;
+                            
+                            if (containerElement && elementBelow) {
+                              const isOverContainer = containerElement.contains(elementBelow) || elementBelow === containerElement;
+                              if (isOverContainer && !activeContainer.includes(item.id) && activeContainer.length < 5) {
+                                setActiveContainer(prev => [...prev, item.id]);
+                              }
+                            }
+                            
+                            setDraggedItem(null);
+                            setShowPreview(false);
+                          }}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className={`px-3 py-1.5 rounded-full cursor-grab active:cursor-grabbing
+                          className={`px-3 py-1.5 rounded-full cursor-grab active:cursor-grabbing touch-none
                             ${draggedItem === item.id
                               ? 'bg-gradient-to-r from-indigo-600/80 to-purple-700/80 scale-110 shadow-2xl opacity-60'
                               : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 border border-white/10'
                             } text-white font-medium text-xs shadow-lg`}
                         >
-                          <span>{item.label}</span>
+                          <span className="pointer-events-none select-none">{item.label}</span>
                         </motion.div>
                       </motion.div>
                     );

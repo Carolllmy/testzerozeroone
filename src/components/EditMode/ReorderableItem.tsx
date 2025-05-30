@@ -89,7 +89,7 @@ export function ReorderableItem({
       whileDrag={{
         scale: 1.05,
         boxShadow: "0px 10px 30px rgba(0,0,0,0.4)",
-        zIndex: 100,
+        zIndex: 9999,
         backgroundColor: "rgba(59, 130, 246, 0.6)",
         cursor: "grabbing",
         borderRadius: "12px"
@@ -130,21 +130,22 @@ export function ReorderableItem({
         }
       }}
     >
-      <div className="flex items-center gap-2 p-3 cursor-grab active:cursor-grabbing">
+      <div className="flex items-center gap-2 p-3 cursor-grab active:cursor-grabbing touch-none">
         <motion.div
-          className="cursor-grab active:cursor-grabbing"
+          className="cursor-grab active:cursor-grabbing touch-none"
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
+          onPointerDown={(e) => dragControls.start(e)}
         >
           <GripVertical className="text-gray-400 hover:text-white transition-colors" size={16} />
         </motion.div>
-        <div className="flex-1 select-none">
+        <div className="flex-1 select-none pointer-events-none">
           <span className="font-medium text-white select-none">{item.label}: </span>
           <span className="text-gray-200 select-none">{formatValue(id, book[id as keyof AudioBook])}</span>
         </div>
         <motion.button
           onClick={() => onRemove(id)}
-          className="opacity-100 transition-all text-red-500 hover:text-red-400 flex items-center justify-center select-none"
+          className="opacity-100 transition-all text-red-500 hover:text-red-400 flex items-center justify-center select-none pointer-events-auto"
           aria-label="Remove item"
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}

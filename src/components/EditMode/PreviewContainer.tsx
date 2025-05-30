@@ -39,7 +39,7 @@ export const PreviewContainer = forwardRef<HTMLDivElement, PreviewContainerProps
     return (
       <motion.div
         ref={ref}
-        className="preview-container w-[90vw] max-w-[500px] h-[35vh] md:h-[50vh] max-h-[600px] bg-gray-800/30 rounded-xl border-2 border-dashed border-gray-600/50 z-20"
+        className="preview-container w-[90vw] max-w-[500px] h-[35vh] md:h-[50vh] max-h-[600px] bg-gray-800/30 rounded-xl border-2 border-dashed border-gray-600/50 z-40"
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
         initial={{ scale: 0.95, opacity: 0 }}
