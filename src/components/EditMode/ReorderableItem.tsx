@@ -130,7 +130,7 @@ export function ReorderableItem({
         }
       }}
     >
-      <div className="flex items-center gap-2 px-3 py-1.5 cursor-grab active:cursor-grabbing touch-none">
+      <div className="flex items-center gap-2 px-3 py-0.5 cursor-grab active:cursor-grabbing touch-none">
         <motion.div
           className="cursor-grab active:cursor-grabbing touch-none"
           whileHover={{ scale: 1.2 }}
@@ -139,7 +139,7 @@ export function ReorderableItem({
         >
           <GripVertical className="text-gray-400 hover:text-white transition-colors" size={16} />
         </motion.div>
-        <div className="flex-1 select-none pointer-events-none">
+        <div className="flex-1 select-none pointer-events-none text-sm">
           <span className="font-medium text-white select-none">{item.label}: </span>
           <span className="text-gray-200 select-none">{formatValue(id, book[id as keyof AudioBook])}</span>
         </div>

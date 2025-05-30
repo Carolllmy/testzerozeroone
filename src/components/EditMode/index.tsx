@@ -240,7 +240,7 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
         <X className="text-white/90" size={22} />
       </motion.button>
 
-      <div className={`absolute ${isMobile ? 'inset-x-0 top-16 bottom-48' : 'inset-0'} flex items-center justify-center`}>
+      <div className={`absolute ${isMobile ? 'inset-x-0 top-16 bottom-48' : 'inset-0'} flex items-center justify-center px-4`}>
         <motion.div 
           className="flex flex-col items-center z-40"
           initial={{ scale: 0.9, opacity: 0 }}

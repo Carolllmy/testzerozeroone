@@ -39,7 +39,7 @@ export const PreviewContainer = forwardRef<HTMLDivElement, PreviewContainerProps
     return (
       <motion.div
         ref={ref}
-        className="preview-container w-[90vw] max-w-[500px] h-[40vh] md:h-[50vh] max-h-[400px] md:max-h-[600px] bg-gray-800/30 rounded-xl border-2 border-dashed border-gray-600/50 z-40"
+        className="preview-container w-[90vw] max-w-[500px] aspect-square bg-gray-800/30 rounded-xl border-2 border-dashed border-gray-600/50 z-40"
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
         initial={{ scale: 0.95, opacity: 0 }}
@@ -58,14 +58,13 @@ export const PreviewContainer = forwardRef<HTMLDivElement, PreviewContainerProps
           transition: { duration: 0.2 }
         }}
       >
-        <motion.div className="relative w-full h-full p-4 flex items-center justify-center">
-          <div className="relative w-full aspect-square max-h-full">
-            <img
-              src={book.coverArt}
-              alt={book.bookTitle}
-              className="w-full h-full object-cover rounded-lg"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent rounded-lg">
+        <motion.div className="relative w-full h-full">
+          <img
+            src={book.coverArt}
+            alt={book.bookTitle}
+            className="w-full h-full object-cover rounded-lg"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent rounded-lg">
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <Reorder.Group
                 axis="y"
@@ -94,7 +93,7 @@ export const PreviewContainer = forwardRef<HTMLDivElement, PreviewContainerProps
                     window.getSelection()?.removeAllRanges();
                   }
                 }}
-                className="space-y-1"
+                className="space-y-0.5"
                 style={{ outline: 'none' }}
               >
                 <AnimatePresence>
@@ -160,7 +159,6 @@ export const PreviewContainer = forwardRef<HTMLDivElement, PreviewContainerProps
                 </motion.div>
               )}
             </div>
-          </div>
           </div>
         </motion.div>
       </motion.div>
