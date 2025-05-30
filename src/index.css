@@ -50,3 +50,16 @@ body.modal-open {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Safe area padding for mobile devices */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Mobile drag preview styles */
+.drag-preview {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  touch-action: none;
+}

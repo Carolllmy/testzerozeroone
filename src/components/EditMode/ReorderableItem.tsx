@@ -120,7 +120,7 @@ export function ReorderableItem({
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', zIndex: isDragging ? 9999 : 'auto' }}
       onAnimationComplete={() => {
         setIsHovered(false);
         setIsDragging(false);

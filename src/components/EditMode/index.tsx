@@ -26,7 +26,10 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
   const [showPreview, setShowPreview] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [touchDragPosition, setTouchDragPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isDraggingTouch, setIsDraggingTouch] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dragPreviewRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
   // Prevent body scroll on iOS when modal is open
@@ -207,6 +210,24 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
       transition={{ duration: 0.2 }}
       className="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 overflow-hidden"
     >
+      {/* Touch drag preview */}
+      {isDraggingTouch && touchDragPosition && draggedItem && (
+        <motion.div
+          ref={dragPreviewRef}
+          className="fixed z-[9999] pointer-events-none"
+          style={{
+            left: touchDragPosition.x - 40,
+            top: touchDragPosition.y - 20,
+          }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1.1, opacity: 0.9 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white font-medium text-sm shadow-2xl">
+            {draggables.find(d => d.id === draggedItem)?.label}
+          </div>
+        </motion.div>
+      )}
       <motion.button
         onClick={onClose}
         className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-700/50 transition-all z-50 bg-gray-800/40 backdrop-blur-sm border border-gray-700/30 shadow-md"
@@ -219,7 +240,7 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
         <X className="text-white/90" size={22} />
       </motion.button>
 
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className={`absolute ${isMobile ? 'inset-x-0 top-16 bottom-48' : 'inset-0'} flex items-center justify-center`}>
         <motion.div 
           className="flex flex-col items-center z-40"
           initial={{ scale: 0.9, opacity: 0 }}
@@ -253,10 +274,10 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
         </motion.div>
       </div>
 
-      {/* Mobile layout - multi-row grid at bottom */}
+      {/* Mobile layout - fixed at bottom */}
       {isMobile && (
-        <div className="absolute bottom-32 left-0 right-0 z-10 px-4 max-h-[50vh] overflow-y-auto">
-          <div className="bg-gray-800/90 backdrop-blur-md rounded-lg p-4 border border-gray-700/50">
+        <div className="fixed bottom-0 left-0 right-0 z-30 px-4 pb-safe">
+          <div className="bg-gray-900/95 backdrop-blur-lg rounded-t-2xl p-4 border-t border-gray-700/50 shadow-2xl max-h-44 overflow-y-auto">
             <div className="flex flex-wrap gap-2">
               <AnimatePresence mode="popLayout">
                 {draggables
@@ -276,11 +297,32 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
                           draggable
                           onDragStart={(e) => handleDragStart(e as React.DragEvent, item.id)}
                           onDragEnd={handleDragEnd}
-                          onTouchStart={() => {
+                          onTouchStart={(e) => {
+                            e.preventDefault();
+                            const touch = e.touches[0];
                             setDraggedItem(item.id);
-                            setShowPreview(true);
+                            setIsDraggingTouch(true);
+                            setTouchDragPosition({ x: touch.clientX, y: touch.clientY });
+                          }}
+                          onTouchMove={(e) => {
+                            e.preventDefault();
+                            if (!isDraggingTouch || !draggedItem) return;
+                            const touch = e.touches[0];
+                            setTouchDragPosition({ x: touch.clientX, y: touch.clientY });
+                            
+                            // Check if over container
+                            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                            if (elementBelow && containerRef.current) {
+                              const isOverContainer = containerRef.current.contains(elementBelow);
+                              if (isOverContainer) {
+                                elementBelow.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                              }
+                            }
                           }}
                           onTouchEnd={(e) => {
+                            e.preventDefault();
+                            if (!isDraggingTouch || !draggedItem) return;
+                            
                             const touch = e.changedTouches[0];
                             const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
                             const containerElement = containerRef.current;
@@ -293,7 +335,8 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
                             }
                             
                             setDraggedItem(null);
-                            setShowPreview(false);
+                            setIsDraggingTouch(false);
+                            setTouchDragPosition(null);
                           }}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
@@ -347,7 +390,7 @@ export default function EditMode({ book, onClose, onSave, currentConfig }: EditM
       <motion.button
         onClick={handleSaveConfiguration}
         disabled={isSaving}
-        className={`absolute ${isMobile ? 'bottom-4 right-4 px-5 py-2.5' : 'bottom-8 right-8 px-7 py-3.5'} text-white rounded-lg transition-all z-50 shadow-lg hover:shadow-xl font-medium tracking-wide ${
+        className={`${isMobile ? 'fixed bottom-52 right-4 px-5 py-2.5' : 'absolute bottom-8 right-8 px-7 py-3.5'} text-white rounded-lg transition-all z-50 shadow-lg hover:shadow-xl font-medium tracking-wide ${
           showSuccess 
             ? 'bg-gradient-to-r from-green-500 to-green-600' 
             : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700'
