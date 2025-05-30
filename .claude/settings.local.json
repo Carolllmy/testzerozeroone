@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)",
+      "Bash(sed:*)",
+      "Bash(sudo npm i -g @anthropic-ai/claude-code)",
+      "Bash(rm:*)",
+      "Bash(npm run dev:*)",
+      "Bash(rg:*)",
+      "Bash(/usr/local/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/arm64-darwin/rg \"absolute|relative|fixed\" -A 2 -B 2 /Users/tianxing/Documents/NYU/Code/Audible/src/components/EditMode)",
+      "Bash(find:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

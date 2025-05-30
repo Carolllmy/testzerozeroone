@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Positioning Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #111;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed red;
+        }
+        
+        .preview-box {
+            width: 500px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid green;
+            position: relative;
+            z-index: 20;
+        }
+        
+        .bubble-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed yellow;
+        }
+        
+        .bubble {
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            background: #6366f1;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .bubble.offset {
+            transform: translate(-50%, -50%) translateX(100px);
+        }
+        
+        .legend {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+        }
+        
+        .legend div {
+            margin: 5px 0;
+        }
+        
+        .red { color: red; }
+        .green { color: green; }
+        .yellow { color: yellow; }
+        .blue { color: #6366f1; }
+    </style>
+</head>
+<body>
+    <div class="legend">
+        <div class="red">Red border: Main container (fixed inset-0)</div>
+        <div class="green">Green border: Preview container (500x600)</div>
+        <div class="yellow">Yellow border: Bubble container</div>
+        <div class="blue">Blue: Bubbles (should be in circle around center)</div>
+    </div>
+    
+    <div class="container">
+        <div class="preview-box">Preview</div>
+    </div>
+    
+    <div class="bubble-container">
+        <div class="bubble">Bubble 1</div>
+        <div class="bubble offset">+100px X</div>
+    </div>
+</body>
+</html>
